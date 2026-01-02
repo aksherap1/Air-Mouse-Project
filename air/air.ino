@@ -1,122 +1,83 @@
 #include <Wire.h>
-#include "I2Cdev.h"
-#include "MPU6050_6Axis_MotionApps20.h"
 #include <BleMouse.h>
 
-// ----- BLE Mouse -----
 BleMouse bleMouse;
 
-// ----- MPU6050 -----
-MPU6050 mpu;
-const int INTERRUPT_PIN = 2;  // INT pin from MPU6050
-volatile bool mpuInterrupt = false; // Flag set when MPU data ready
+#define MPU_ADDR 0x68
 
-// DMP & FIFO
-bool dmpReady = false;
-uint8_t devStatus;
-uint16_t packetSize;
-uint8_t fifoBuffer[64];
+#define BTN_LEFT   D5
+#define BTN_RIGHT  D6
+#define BTN_UP     D7
+#define BTN_DOWN   D8
 
-// Orientation data
-Quaternion q;
-VectorFloat gravity;
-float ypr[3];
+// Tilt settings
+const int tiltDeadzone = 1000;  // ignore small jitter
+const float tiltScale = 0.01;   // scale raw accel to pixels
 
-// LED for feedback
-bool ledState = false;
-
-// Interrupt handler
-void dmpDataReady() {
-  mpuInterrupt = true;
-}
+// Button scroll
+const int buttonScroll = 5;
 
 void setup() {
   Serial.begin(115200);
-  while(!Serial);
+  while (!Serial);
 
-  // Initialize I2C
-  Wire.begin(13, 12); // SDA=12, SCL=13 on Nano ESP32
+  pinMode(BTN_LEFT, INPUT_PULLUP);
+  pinMode(BTN_RIGHT, INPUT_PULLUP);
+  pinMode(BTN_UP, INPUT_PULLUP);
+  pinMode(BTN_DOWN, INPUT_PULLUP);
+
+  bleMouse.begin();
+  Serial.println("BLE Mouse ready");
+
+  Wire.begin(13, 12); // SDA, SCL
   Wire.setClock(400000);
 
-  // Initialize MPU6050
-  Serial.println("Initializing MPU6050...");
-  mpu.initialize();
-  pinMode(INTERRUPT_PIN, INPUT);
+  // Wake MPU6050
+  Wire.beginTransmission(MPU_ADDR);
+  Wire.write(0x6B);
+  Wire.write(0);
+  Wire.endTransmission(true);
 
-  if (!mpu.testConnection()) {
-    Serial.println("MPU6050 connection failed!");
-    while(1);
-  }
-  Serial.println("MPU6050 connected.");
+  Serial.println("MPU6050 initialized (RAW mode)");
+}
 
-  // Initialize DMP
-  devStatus = mpu.dmpInitialize();
-  // Optional: calibrated offsets
-  mpu.setXGyroOffset(0);
-  mpu.setYGyroOffset(0);
-  mpu.setZGyroOffset(0);
-  mpu.setXAccelOffset(0);
-  mpu.setYAccelOffset(0);
-  mpu.setZAccelOffset(0);
-
-  if (devStatus == 0) {
-    mpu.CalibrateAccel(6);
-    mpu.CalibrateGyro(6);
-    mpu.setDMPEnabled(true);
-    attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), dmpDataReady, RISING);
-    packetSize = mpu.dmpGetFIFOPacketSize();
-    dmpReady = true;
-    Serial.println("DMP ready!");
-  } else {
-    Serial.print("DMP initialization failed (code ");
-    Serial.print(devStatus);
-    Serial.println(")");
-    while(1);
-  }
-
-  // Initialize BLE mouse
-  bleMouse.begin();
-
-  pinMode(LED_BUILTIN, OUTPUT);
+int mapTilt(int16_t val) {
+  if (abs(val) < tiltDeadzone) return 0;
+  // scale to 0–20 pixels roughly
+  return (int)(val * tiltScale);
 }
 
 void loop() {
-  // Wait until DMP is ready
-  if(!dmpReady) return;
+  if (!bleMouse.isConnected()) return;
 
-  // Only read if MPU interrupt occurred
-  if(mpuInterrupt) {
-    mpuInterrupt = false;
+  int16_t ax, ay, az;
+  Wire.beginTransmission(MPU_ADDR);
+  Wire.write(0x3B);
+  Wire.endTransmission(false);
+  Wire.requestFrom((uint8_t)MPU_ADDR, (uint8_t)6, (uint8_t)true);
+  ax = Wire.read() << 8 | Wire.read();
+  ay = Wire.read() << 8 | Wire.read();
+  az = Wire.read() << 8 | Wire.read();
 
-    if(mpu.dmpGetCurrentFIFOPacket(fifoBuffer)) {
-      // Get orientation
-      mpu.dmpGetQuaternion(&q, fifoBuffer);
-      mpu.dmpGetGravity(&gravity, &q);
-      mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
+  int scrollX = 0;
+  int scrollY = 0;
 
-      // Debug: print values
-      Serial.print("Yaw: "); Serial.print(ypr[0]*180/M_PI);
-      Serial.print("\tPitch: "); Serial.print(ypr[1]*180/M_PI);
-      Serial.print("\tRoll: "); Serial.println(ypr[2]*180/M_PI);
+  // Buttons
+  if (digitalRead(BTN_LEFT)  == LOW) scrollX -= buttonScroll;
+  if (digitalRead(BTN_RIGHT) == LOW) scrollX += buttonScroll;
+  if (digitalRead(BTN_UP)    == LOW) scrollY -= buttonScroll;
+  if (digitalRead(BTN_DOWN)  == LOW) scrollY += buttonScroll;
 
-      // Move BLE mouse if connected
-      if(bleMouse.isConnected()) {
-        // Scale movement: increase values for noticeable cursor movement
-        int xMove = map(ypr[2]*180/M_PI, -45, 45, -20, 20); // roll -> X
-        int yMove = map(ypr[1]*180/M_PI, -45, 45, -20, 20); // pitch -> Y
+  // Tilt (swap axes if needed)
+  scrollX += mapTilt(ay); // left/right
+  scrollY += mapTilt(ax); // forward/back
 
-        // Optional: deadzone to avoid jitter
-        if(abs(xMove) < 2) xMove = 0;
-        if(abs(yMove) < 2) yMove = 0;
-
-        bleMouse.move(xMove, yMove);
-      }
-
-      // Blink LED to indicate activity
-      ledState = !ledState;
-      digitalWrite(LED_BUILTIN, ledState);
-
-      delay(20); // small delay for smooth cursor movement
-    }
+  // Apply movement
+  if (scrollX != 0 || scrollY != 0) {
+    bleMouse.move(scrollX, scrollY);
+    Serial.print("Tilt → X: "); Serial.print(scrollX);
+    Serial.print(" Y: "); Serial.println(scrollY);
   }
+
+  delay(15);
 }
