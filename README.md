@@ -14,7 +14,7 @@ This project demonstrates:
 
 ### Materials Used  
 
-- ESP32 Dev Board
+- ESP32 Nano Dev Board
 - MPU-6050
 - Push Button
 - Breadboard
@@ -34,8 +34,8 @@ This project demonstrates:
 - Install ESP32-BLE-Mouse library by T-vK
 
 **2. Connect hardware (Breadboard)**
-- Wire MPU-6050 to ESP32 via I2C (SDA -> GPIO 21, SCL -> GPIO 22, VCC -> 3.3V, GND -> GND)
-- Connect push button to a digital input pin
+- Wire MPU-6050 to ESP32 via I2C (SDA -> ESP32 Nano D13, SCL -> ESP32 Nano D12, VCC -> 3.3V, GND -> GND)
+- Connect push button to a digital input pin (e.g., D5, D6, D7, D8) & connect the other terminal to GND
 - Use a breadboard for easy prototyping
 
 **3. Test BLE Mouse**
