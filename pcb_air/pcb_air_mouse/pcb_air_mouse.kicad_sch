@@ -1166,10 +1166,329 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "power:GND"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 -6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "GND"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "GND_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54) (xy -1.27 -1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "GND_1_1"
+				(pin power_in line
+					(at 0 0 270)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(junction
+		(at 111.76 116.84)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "79323c08-2536-4b67-86df-010aa85120ae")
+	)
+	(junction
+		(at 67.31 85.09)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a28e7d09-13a8-40f7-b650-d0533bac3281")
+	)
+	(wire
+		(pts
+			(xy 135.89 116.84) (xy 135.89 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1eb4cc8e-549e-4871-bf5d-619b85a9e084")
+	)
+	(wire
+		(pts
+			(xy 111.76 102.87) (xy 118.11 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "275909d5-f089-441f-b4c1-42358adb3de7")
+	)
+	(wire
+		(pts
+			(xy 85.09 110.49) (xy 85.09 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2d78e290-855d-48af-9795-8bf9b96ad60d")
+	)
+	(wire
+		(pts
+			(xy 67.31 85.09) (xy 67.31 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "321b1852-d7e7-4a76-8eb7-a626ffd51dd8")
+	)
+	(wire
+		(pts
+			(xy 67.31 87.63) (xy 67.31 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3c4ef862-69ad-47ab-b3c9-30849346e685")
+	)
+	(wire
+		(pts
+			(xy 67.31 62.23) (xy 111.76 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "45722629-b5dc-416d-9931-1c9d6034e63b")
+	)
+	(wire
+		(pts
+			(xy 85.09 116.84) (xy 111.76 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "47b1d370-ad7f-435d-9d21-4b88101997a7")
+	)
+	(wire
+		(pts
+			(xy 111.76 62.23) (xy 111.76 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "54ab944e-7a94-4ac1-bd1a-860eecd8ee26")
+	)
+	(wire
+		(pts
+			(xy 66.04 64.77) (xy 110.49 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "54e4e10f-12b7-405b-9cc8-3e0a1ec7fb3a")
+	)
+	(wire
+		(pts
+			(xy 110.49 64.77) (xy 110.49 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "56815755-51d7-4ad6-bda2-a8fda39e9920")
+	)
+	(wire
+		(pts
+			(xy 111.76 116.84) (xy 135.89 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8b20430b-1942-426b-888b-69dd7b0ad8f0")
+	)
+	(wire
+		(pts
+			(xy 67.31 85.09) (xy 66.04 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a9ef6eba-7503-4076-accd-ba607e9b6eb5")
+	)
+	(wire
+		(pts
+			(xy 110.49 105.41) (xy 118.11 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c535990d-44ba-4e54-84b6-4fc38d2ee125")
+	)
+	(wire
+		(pts
+			(xy 66.04 85.09) (xy 66.04 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fda72cfd-93eb-44a9-bab6-d93438aad796")
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 111.76 116.84 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "33214d40-f305-43c7-a00c-61269e8c7e99")
+		(property "Reference" "#PWR01"
+			(at 111.76 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 111.76 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 111.76 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 111.76 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 111.76 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7d01d08f-8989-4098-a701-dee8eedb552a")
+		)
+		(instances
+			(project ""
+				(path "/3ba0ce07-30b1-4d23-a73a-76e88b2b5e68"
+					(reference "#PWR01")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Sensor_Motion:MPU-6050")
-		(at 184.15 90.17 0)
+		(at 85.09 92.71 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1178,7 +1497,7 @@
 		(fields_autoplaced yes)
 		(uuid "3ad746ed-85fc-43f8-8722-946065b91a07")
 		(property "Reference" "U1"
-			(at 186.2933 106.68 0)
+			(at 87.2333 109.22 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1187,7 +1506,7 @@
 			)
 		)
 		(property "Value" "MPU-6050"
-			(at 186.2933 109.22 0)
+			(at 87.2333 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1196,7 +1515,7 @@
 			)
 		)
 		(property "Footprint" "Sensor_Motion:InvenSense_QFN-24_4x4mm_P0.5mm"
-			(at 184.15 110.49 0)
+			(at 85.09 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1205,7 +1524,7 @@
 			)
 		)
 		(property "Datasheet" "https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf"
-			(at 184.15 93.98 0)
+			(at 85.09 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1214,7 +1533,7 @@
 			)
 		)
 		(property "Description" "InvenSense 6-Axis Motion Sensor, Gyroscope, Accelerometer, I2C"
-			(at 184.15 90.17 0)
+			(at 85.09 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
