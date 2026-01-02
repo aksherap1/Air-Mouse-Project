@@ -9,7 +9,11 @@ This project demonstrates:
 - Sensor integration
 - Embedded programming w/Arduino IDE
 - PCB Building
-- Gyro
+- Gyroscope + accelerometer processing
+- Motion-controlled input devices
+- Button input handling
+- Real-time data processing
+- Adjustable sensitivity & deadzone implementation
 
 ---
 
@@ -67,6 +71,13 @@ This project demonstrates:
 ---
 
 ### Analysis
+
+- The MPU-6050 gyroscope and accelerometer detect the device's orientation and motion in 3D space. The accelerometer measures linear acceleration (tilt and movement), while the gyroscope measures rotational velocity. Together, they allow the ESP32 to move the mouse cursor based on how you tilt or rotate the device.
+- Built-in gyro calibration establishes a baseline “neutral” position when the device is stationary. This means the system knows what counts as “no movement,” preventing the cursor from drifting due to small biases in the sensor readings.
+- The moving average filter is a mathematical method to smooth out rapid fluctuations in sensor data. It averages several consecutive readings so that sudden spikes or jitters (like tiny hand tremors) do not cause erratic mouse movement.
+- Adjustable deadzone defines a small range of tilt values that are ignored. Any motion inside this range is treated as zero, which prevents the cursor from moving unintentionally when the device is nearly still.
+- Sensitivity determines how strongly tilt translates into cursor movement. Higher sensitivity makes the cursor move faster for a small tilt, while lower sensitivity requires more tilt for the same cursor motion.
+- By combining calibration, filtering, deadzone, and adjustable sensitivity, the system achieves smooth, stable, and intuitive motion control, accurately translating intended device movements into cursor actions while ignoring unintended micro-movements.
 
 ---
 
