@@ -17,7 +17,7 @@ This project demonstrates:
 
 - ESP32 Nano Dev Board
 - MPU-6050
-- Push Button
+- 4 Push Buttons
 - Breadboard
 - Jumper Wires
 - USB Cable
@@ -56,7 +56,7 @@ This project demonstrates:
   - Draw schematic of ESP32, MPU-6050, and button
   - Designed PCB layout using KiCad
   - Order PCB
-  - Solder components (ESP32 module, sensor, button) onto the PCB
+  - Solder components (ESP32 Nano module, sensor, button) onto the PCB
   - Upload same Arduino code to ESP32 module
 
 7. Finalize device
