@@ -1,3 +1,9 @@
+/*******************************************************
+* Name: Akshera Paladhi
+* Date: January 2, 2025
+* This code checks if MPU6050 is connected properly
+*******************************************************/
+
 #include <Wire.h>
 #include <MPU6050.h>
 

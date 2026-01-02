@@ -1,6 +1,9 @@
 /**
- * This example turns the ESP32 into a Bluetooth LE mouse that continuously moves the mouse.
- */
+/*******************************************************
+* Name: Akshera Paladhi
+* Date: January 2, 2025
+* This example turns the ESP32 into a Bluetooth LE mouse that continuously moves the mouse.
+*/
 #include <BleMouse.h>
 
 BleMouse bleMouse;

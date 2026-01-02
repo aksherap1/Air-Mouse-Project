@@ -1,40 +1,67 @@
-#include <Wire.h>
-#include <BleMouse.h>
+/*******************************************************
+* Name: Akshera Paladhi
+* Date: January 2, 2025
+* Summary: This code turns an ESP32 into a BLE Air Mouse using 
+* an MPU6050 gyroscope/accelerometer for motion control.
+* 
+* Features:
+* - Mouse movement based on device tilt
+* - Moving average filter to reduce jitter
+* - Adjustable tilt sensitivity and deadzone
+* - Four physical buttons:
+*     - Left Click (BTN_LEFT)
+*     - Right Click (BTN_RIGHT)
+*     - Scroll Up (BTN_UP)
+*     - Scroll Down (BTN_DOWN)
+* - Gyro calibration at startup for stable control
+* - Runtime MPU6050 connectivity check
+* 
+* Notes:
+* - BLE connection must be established for mouse movement
+* - TiltDeadzone and TiltScale can be adjusted to fine-tune
+*   cursor behavior.
+*******************************************************/
 
-BleMouse bleMouse;
+//libraries
+#include <Wire.h> //communicates w/MPU6050
+#include <BleMouse.h> //allows ESP32 to act as a BLE mouse 
+
+BleMouse bleMouse; //create BLE mouse object to call methods on this to move cursor, click, or scroll
 
 // MPU6050 I2C address
-#define MPU_ADDR 0x68
+#define MPU_ADDR 0x68 //ADo pin connected to GND 
 
 // Button pins
-#define BTN_LEFT   D5
-#define BTN_RIGHT  D6
-#define BTN_UP     D7
-#define BTN_DOWN   D8
+#define BTN_LEFT   D5 //Left click
+#define BTN_RIGHT  D6 //Right click
+#define BTN_UP     D7 //Scroll up
+#define BTN_DOWN   D8 //Scroll Down
 
 // Tilt configuration
-const int tiltDeadzone = 500;   // ignore tiny jitter
-const float tiltScale = 0.0015;  // adjust cursor speed
+const int tiltDeadzone = 500;   // neutral zone for tilt
+const float tiltScale = 0.0015;  // smaller = slower/smoother movement 
 
 // Moving average filter
-const int filterSize = 5;
+const int filterSize = 5; 
 int16_t axBuffer[filterSize], ayBuffer[filterSize];
 int filterIndex = 0;
 
 // Gyro calibration offsets
-int16_t axOffset = 0, ayOffset = 0;
+int16_t axOffset = 0, ayOffset = 0; //stores average resting value from MPU6050 so mouse starts neutral
 
 // Button states for press/release logic
+//keeps tracks of button press states to prevent sending multiple clicks/scrolls when holding a buttons
 bool leftPressed = false;
 bool rightPressed = false;
 bool upPressed = false;
 bool downPressed = false;
 
+//Starts serial monitor for debugging
 void setup() {
   Serial.begin(115200);
   while (!Serial);
 
-  // Initialize buttons
+  // Initialize buttons (sets buttons input w/internal-pull-up resistors & buttons connect to GND when pressed)
   pinMode(BTN_LEFT, INPUT_PULLUP);
   pinMode(BTN_RIGHT, INPUT_PULLUP);
   pinMode(BTN_UP, INPUT_PULLUP);
@@ -45,14 +72,14 @@ void setup() {
   Serial.println("BLE Mouse ready");
 
   // Initialize I2C
-  Wire.begin(13, 12);
+  Wire.begin(13, 12); //SDA = D13, SCL = D12, at 4000kHz speed
   Wire.setClock(400000);
 
   // --- Check MPU6050 connection ---
   Wire.beginTransmission(MPU_ADDR);
   Wire.write(0x75); // WHO_AM_I register
   Wire.endTransmission(false);
-  Wire.requestFrom((uint8_t)MPU_ADDR, (size_t)1, true); // ✅ ESP32-safe
+  Wire.requestFrom((uint8_t)MPU_ADDR, (size_t)1, true); // ESP32 Nano -safe
   if (Wire.available()) {
     uint8_t whoAmI = Wire.read();
     if (whoAmI == 0x68) {
@@ -107,7 +134,7 @@ void readMPU(int16_t &ax, int16_t &ay, int16_t &az) {
   Wire.beginTransmission(MPU_ADDR);
   Wire.write(0x3B); // starting register for accel
   Wire.endTransmission(false);
-  Wire.requestFrom((uint8_t)MPU_ADDR, (size_t)6, true); // ✅ ESP32-safe
+  Wire.requestFrom((uint8_t)MPU_ADDR, (size_t)6, true); // ESP32 Nano -safe
   ax = Wire.read() << 8 | Wire.read();
   ay = Wire.read() << 8 | Wire.read();
   az = Wire.read() << 8 | Wire.read();
