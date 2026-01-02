@@ -9,6 +9,7 @@ This project demonstrates:
 - Sensor integration
 - Embedded programming w/Arduino IDE
 - PCB Building
+- Gyro
 
 ---
 
@@ -20,8 +21,6 @@ This project demonstrates:
 - Breadboard
 - Jumper Wires
 - USB Cable
-- Battery
-- Enclosure/Case
 - PCB
 
 ---
