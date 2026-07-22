@@ -1,0 +1,13 @@
+Info: Output directory '/Users/akshera/Downloads/Air-Mouse-Project/pcb_air/gerber' created.
+Plotted to '/Users/akshera/Downloads/Air-Mouse-Project/pcb_air/gerber/pcb_air-F_Cu.gbr'.
+Plotted to '/Users/akshera/Downloads/Air-Mouse-Project/pcb_air/gerber/pcb_air-B_Cu.gbr'.
+Plotted to '/Users/akshera/Downloads/Air-Mouse-Project/pcb_air/gerber/pcb_air-F_Paste.gbr'.
+Plotted to '/Users/akshera/Downloads/Air-Mouse-Project/pcb_air/gerber/pcb_air-B_Paste.gbr'.
+Plotted to '/Users/akshera/Downloads/Air-Mouse-Project/pcb_air/gerber/pcb_air-F_Silkscreen.gbr'.
+Plotted to '/Users/akshera/Downloads/Air-Mouse-Project/pcb_air/gerber/pcb_air-B_Silkscreen.gbr'.
+Plotted to '/Users/akshera/Downloads/Air-Mouse-Project/pcb_air/gerber/pcb_air-F_Mask.gbr'.
+Plotted to '/Users/akshera/Downloads/Air-Mouse-Project/pcb_air/gerber/pcb_air-B_Mask.gbr'.
+Plotted to '/Users/akshera/Downloads/Air-Mouse-Project/pcb_air/gerber/pcb_air-Edge_Cuts.gbr'.
+Created Gerber job file '/Users/akshera/Downloads/Air-Mouse-Project/pcb_air/gerber/pcb_air-job.gbrjob'.
+Info: Done.
+Info: Done.
