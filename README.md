@@ -1,6 +1,8 @@
-<img width="564" height="622" alt="Screenshot 2026-08-23 at 3 50 18 PM" src="https://github.com/user-attachments/assets/b2ab797c-f088-4d87-a150-9b5fb14a12de" /># Air Mouse Project
+# Air Mouse Project
 
 <img width="532" height="562" alt="Screenshot 2026-01-02 at 2 03 32 PM" src="https://github.com/user-attachments/assets/8e3393e4-f817-40f2-b9a1-1a8abe832844" />
+
+<img width="564" height="622" alt="Screenshot 2026-08-23 at 3 50 18 PM" src="https://github.com/user-attachments/assets/b2ab797c-f088-4d87-a150-9b5fb14a12de" />
 
 ### About  
 The Air Mouse is a wireless, motion-controlled computer mouse. Using an ESP32 microcontroller and an MPU-6050 IMU sensor, it detects hand movement and translates it into cursor movement on your computer. A push button allows for left-click functionality.  
